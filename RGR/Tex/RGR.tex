@@ -1,0 +1,134 @@
+% Звіт
+% 1. Вихідні дані.
+
+% 2. Письмове виконання допрограмового етапу, результатом якого повинні бути проміжки, щодо яких проводиться уточнення.
+
+% 3. Лістинг програми уточнення коренів за методами бісекції, хорд, дотичних
+% (вхідними даними для цієї програми є координати проміжків [ai, bi] та коефіцієнти поліному)
+% та результати дії програми. На кожній ітерації методу слід виводити такі дані: номер ітерації, наближене значення кореня, критерій завершення ітерацій.
+
+\documentclass{article}
+\input{../../packages.tex}
+\hypersetup{colorlinks=true, linkcolor=[RGB]{255, 3, 209}, citecolor={black}}
+
+\graphicspath{ {../Images/} }
+
+\begin{document}
+    \begin{titlepage}
+        \begin{center}
+            \begin{center}
+                НАЦІОНАЛЬНИЙ ТЕХНІЧНИЙ УНІВЕРСИТЕТ УКРАЇНИ
+                «КИЇВСЬКИЙ ПОЛІТЕХНІЧНИЙ ІНСТИТУТ імені Ігоря СІКОРСЬКОГО»
+
+                Фізико-технічний інститут
+            \end{center}
+        $\newline$
+        \vspace{3.3cm}
+        
+        {
+        РОЗРАХУНКОВО-ГРАФІЧНА РОБОТА
+        
+        з кредитного модуля «Методи обчислень»
+        
+        на тему:
+        
+        «ОБЧИСЛЮВАЛЬНЕ РОЗВ’ЯЗАННЯ ДИФЕРЕНЦІАЛЬНИХ
+        
+        РІВНЯНЬ У ЧАСТИННИХ ПОХІДНИХ»
+        
+        Варіант №10
+        }
+        \vspace{3cm}
+        \begin{flushright}
+            Виконав\\студент 3 курсу ФТІ\\групи ФІ-21\\Климентьєв Максим Андрійович
+            
+            \vspace{1cm}
+
+            Перевірив:\\...\\Оцінка:\\...
+        \end{flushright}
+        \vspace{3.5cm}
+        Київ --- 2025
+        \end{center}
+    \end{titlepage}
+    \newpage
+
+    \pagenumbering{gobble}
+    \tableofcontents
+    \cleardoublepage
+    \pagenumbering{arabic}
+    \setcounter{page}{3}
+
+    \newpage
+    \section{ПОСТАНОВКА ЗАДАЧІ}
+    \textbf{Варіант 10}
+
+    Знайти чисельний розв’язок рівняння коливань струни:
+
+    $$ \frac{\partial^2{u}}{\partial{t^2}} = \frac{\partial^2{u}}{\partial{x^2}} + F(t, x) $$
+    % $$ u_{tt} = u_{xx} + F(t, x) $$
+    $$ 0 < x < L = 1 $$
+    $$ u \vert_{(t = 0)} = u_0 = x \cdot (x+1) $$
+    % $$ u(t = 0) = u_0 = x \cdot (x+1) $$
+    $$ \frac{\partial{u}}{\partial{t}} \vert_{(t = 0)} = 0 $$
+    % $$ \frac{\partial{u}}{\partial{t}}(t = 0) = 0 $$
+    % $$ u\vert_{t = 0} = u_1(t) $$
+    $$ u(t, 0) = u_1(t) $$
+    % $$ u\vert_{t = L} = u_2(t) $$
+    $$ u(t, L) = u_2(t) $$
+    \hrule
+    $$ u(t,x) = u_0(x) \cdot \cos(\pi \cdot t) $$
+    $$ u_0(x) = u_0 = x \cdot (x+1) $$
+    $$ u(t,x) = x \cdot (x+1) \cdot \cos(\pi \cdot t) $$
+    $$ u(t,0) = 0 \cdot 1 \cdot \cos(\pi \cdot t) = 0 $$
+    $$ u(t, L) = L \cdot (L+1) \cdot \cos(\pi \cdot t) = 1 \cdot 2 \cdot \cos(\pi \cdot t) = 2 \cdot \cos(\pi \cdot t) $$
+    Навести приклади процесів, які моделюються за допомогою диференціальних рівнянь у частинних похідних гіперболічного типу
+    
+    \newpage
+    \section{ОГЛЯД ТА АНАЛІЗ ІСНУЮЧИХ МЕТОДІВ ЧИСЕЛЬНОГО РОЗВ’ЯЗАННЯ ДРЧП}
+    \newpage
+    \section{ДОСЛІДЖЕННЯ УМОВ ЗАСТОСУВАННЯ ОБРАНОГО МЕТОДУ}
+
+        Явна схема
+
+        $$ \frac{u_i^{k+1} - 2 \cdot u_i^{k} + u_i^{k-1}}{\Delta{t}^2} = \frac{u_{i+1}^{k} - 2 \cdot u_i^{k} + u_{i-1}^{k}}{\Delta{x}^2} + F_i^{k} $$
+        $$ u_i^{k+1} - 2 \cdot u_i^{k} + u_i^{k-1} = \Delta{t}^2 \cdot \left( \frac{u_{i+1}^{k} - 2 \cdot u_i^{k} + u_{i-1}^{k}}{\Delta{x}^2} + F_i^{k} \right) $$
+        $$ u_i^{k+1} = 2 \cdot u_i^{k} - u_i^{k-1} + \Delta{t}^2 \cdot \left( \frac{u_{i+1}^{k} - 2 \cdot u_i^{k} + u_{i-1}^{k}}{\Delta{x}^2} + F_i^{k} \right) $$
+        $$ u(i, k+1) = 2 \cdot u(i, k) - u(i, k-1) + \Delta{t}^2 \cdot \left( \frac{u(i+1, k) - 2 \cdot u(i, k) + u(i-1, k)}{\Delta{x}^2} + F(i, k) \right) $$
+
+        Явно-неявна схема (тришарова схема з вагами)
+
+        \begin{equation*}
+            \begin{split}
+                \frac{u_i^{k+1} - 2 \cdot u_i^{k} + u_i^{k-1}}{\Delta{t}^2} & = \sigma_1 \left( \frac{u_{i+1}^{k+1} - 2 \cdot u_i^{k+1} + u_{i-1}^{k+1}}{\Delta{x}^2} + F_i^{k+1} \right) +\\
+                & + (1 - \sigma_1 - \sigma_2) \left( \frac{u_{i+1}^{k} - 2 \cdot u_i^{k} + u_{i-1}^{k}}{\Delta{x}^2} + F_i^{k} \right) +\\
+                & + \sigma_2 \left( \frac{u_{i+1}^{k-1} - 2 \cdot u_i^{k-1} + u_{i-1}^{k-1}}{\Delta{x}^2} + F_i^{k-1} \right)\\
+            \end{split}
+        \end{equation*}
+
+        $$ u \vert_{(t = 0)} = u_0 = x \cdot (x+1) $$
+        $$ \frac{\partial{u}}{\partial{t}} \vert_{(t = 0)} = 0 $$
+        % $$ \frac{u^1 - u^0}{\Delta{t}} = u_{10} \rightarrow u^1 $$
+        $$ A\left(u^{k+1}\right) = B\left(u^k, u^{k-1}\right) \rightarrow \text{СЛАР або СНАР} $$
+
+    \newpage
+    \section{ОПИС ПРОГРАМНОЇ РЕАЛИЗАЦІЇ}
+    \newpage
+    \section{ОГЛЯД МЕТОДІВ ПІДВИЩЕННЯ ТОЧНОСТІ}
+    \newpage
+    \section{ЗАСТОСУВАННЯ МЕТОДУ ПІДВИЩЕННЯ ТОЧНОСТІ ТА ЕФЕКТИВНОСТІ РОЗВ’ЯЗКУ ДО ПРИКЛАДУ РОБОТИ}
+    \newpage
+    \section{ВИСНОВКИ}
+    \newpage
+    \section{СПИСОК ВИКОРИСТАНИХ ДЖЕРЕЛ}
+    \begin{enumerate}
+        \item 
+    \end{enumerate}
+    \newpage
+    \section{ДОДАТКИ}
+        % \includegraphics{}
+        % \includegraphics{}
+        % \includegraphics{}
+        % \includegraphics{}
+        % \includegraphics{}
+
+\end{document}

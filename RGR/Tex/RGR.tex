@@ -58,20 +58,43 @@
     $$ \frac{\partial^2{u}}{\partial{t^2}} = \frac{\partial^2{u}}{\partial{x^2}} + F(t, x) $$
     % $$ u_{tt} = u_{xx} + F(t, x) $$
     $$ 0 < x < L = 1 $$
-    $$ u \vert_{(t = 0)} = u_0 = x \cdot (x+1) $$
-    % $$ u(t = 0) = u_0 = x \cdot (x+1) $$
-    $$ \frac{\partial{u}}{\partial{t}} \vert_{(t = 0)} = 0 $$
-    % $$ \frac{\partial{u}}{\partial{t}}(t = 0) = 0 $$
+    % $$ u \vert_{(t = 0)} = u_0 = x \cdot (x+1) $$
+    $$ u(t = 0) = u_0 = x \cdot (x+1) $$
+    % $$ \frac{\partial{u}}{\partial{t}} \vert_{(t = 0)} = 0 $$
+    $$ \frac{\partial{u}}{\partial{t}}(t = 0) = 0 $$
     % $$ u\vert_{t = 0} = u_1(t) $$
     $$ u(t, 0) = u_1(t) $$
     % $$ u\vert_{t = L} = u_2(t) $$
     $$ u(t, L) = u_2(t) $$
+
     \hrule
+
     $$ u(t,x) = u_0(x) \cdot \cos(\pi \cdot t) $$
     $$ u_0(x) = u_0 = x \cdot (x+1) $$
     $$ u(t,x) = x \cdot (x+1) \cdot \cos(\pi \cdot t) $$
+
+    \hrule
+
     $$ u(t,0) = 0 \cdot 1 \cdot \cos(\pi \cdot t) = 0 $$
     $$ u(t, L) = L \cdot (L+1) \cdot \cos(\pi \cdot t) = 1 \cdot 2 \cdot \cos(\pi \cdot t) = 2 \cdot \cos(\pi \cdot t) $$
+
+    \hrule
+
+    $$ \frac{\partial{u}}{\partial{x}} = 2 \cdot x \cdot \cos(\pi \cdot t) + \cos(\pi \cdot t) $$
+    $$ \frac{\partial^2{u}}{\partial{x^2}} = 2 \cdot \cos(\pi \cdot t) $$
+
+    $$ \frac{\partial{u}}{\partial{t}} = -\pi \cdot x \cdot (x+1) \cdot \sin(\pi \cdot t) $$
+    $$ \frac{\partial^2{u}}{\partial{t^2}} = -\pi^2 \cdot x \cdot (x+1) \cdot \cos(\pi \cdot t) $$
+
+    \hrule
+
+    $$ \frac{\partial^2{u}}{\partial{t^2}} = \frac{\partial^2{u}}{\partial{x^2}} + F(t, x) $$
+    $$ \frac{\partial^2{u}}{\partial{t^2}} - \frac{\partial^2{u}}{\partial{x^2}} = F(t, x) $$
+    $$ F(t, x) = -\pi^2 \cdot x \cdot (x+1) \cdot \cos(\pi \cdot t) - 2 \cdot \cos(\pi \cdot t) $$
+    $$ F(t, x) = -\cos(\pi \cdot t) \cdot \left(\pi^2 \cdot x \cdot (x+1) + 2\right) $$
+
+    \hrule
+
     Навести приклади процесів, які моделюються за допомогою диференціальних рівнянь у частинних похідних гіперболічного типу
     
     \newpage

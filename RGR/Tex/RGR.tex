@@ -104,19 +104,67 @@
 
     \newpage
     \section{ДОСЛІДЖЕННЯ УМОВ ЗАСТОСУВАННЯ ОБРАНОГО МЕТОДУ}
-        Явна схема
+        \begin{enumerate}
+            \item 
+                Тришарова схема з вагами
 
-        $$ u(t, x) $$
-        $$ \frac{\partial^2{u}}{\partial{t^2}} = \frac{\partial^2{u}}{\partial{x^2}} + F(t, x) $$
-        $$ \frac{u_i^{k+1} - 2 \cdot u_i^{k} + u_i^{k-1}}{\Delta{t}^2} = \frac{u_{i+1}^{k} - 2 \cdot u_i^{k} + u_{i-1}^{k}}{\Delta{x}^2} + F_i^{k} $$
-        $$ u_i^{k+1} - 2 \cdot u_i^{k} + u_i^{k-1} = \Delta{t}^2 \cdot \left( \frac{u_{i+1}^{k} - 2 \cdot u_i^{k} + u_{i-1}^{k}}{\Delta{x}^2} + F_i^{k} \right) $$
-        $$ u_i^{k+1} = 2 \cdot u_i^{k} - u_i^{k-1} + \Delta{t}^2 \cdot \left( \frac{u_{i+1}^{k} - 2 \cdot u_i^{k} + u_{i-1}^{k}}{\Delta{x}^2} + F_i^{k} \right) $$
-        $$ u(k+1, i) = 2 \cdot u(k, i) - u(k-1, i) + \Delta{t}^2 \cdot \left( \frac{u(k, i+1) - 2 \cdot u(k, i) + u(k, i-1)}{\Delta{x}^2} + F(k, i) \right) $$
+                $$ u(t, x) $$
+                $$ \frac{\partial^2{u}}{\partial{t^2}} = \frac{\partial^2{u}}{\partial{x^2}} + F(t, x) $$
+                
+                \begin{align*}
+                    \frac{u_i^{k+1} - 2 \cdot u_i^{k} + u_i^{k-1}}{\Delta{t}^2}& = \sigma_1 \cdot \left(\frac{u_{i+1}^{k+1} - 2 \cdot u_i^{k+1} + u_{i-1}^{k+1}}{\Delta{x}^2} + F_i^{k+1}\right) + \\
+                    & + \left(1 - \sigma_1 - \sigma_2 \right) \cdot \left(\frac{u_{i+1}^{k} - 2 \cdot u_i^{k} + u_{i-1}^{k}}{\Delta{x}^2} + F_i^{k}\right) + \\
+                    & + \sigma_2 \cdot \left(\frac{u_{i+1}^{k-1} - 2 \cdot u_i^{k-1} + u_{i-1}^{k-1}}{\Delta{x}^2} + F_i^{k-1}\right)
+                \end{align*}
+                
+                \begin{align*}
+                    u_i^{k+1} & = 2 \cdot u_i^{k} - u_i^{k-1} + \Delta{t}^2 \cdot \sigma_1 \cdot \left(\frac{u_{i+1}^{k+1} - 2 \cdot u_i^{k+1} + u_{i-1}^{k+1}}{\Delta{x}^2} + F_i^{k+1}\right) + \\
+                    & + \Delta{t}^2 \cdot \left(1 - \sigma_1 - \sigma_2 \right) \cdot \left(\frac{u_{i+1}^{k} - 2 \cdot u_i^{k} + u_{i-1}^{k}}{\Delta{x}^2} + F_i^{k}\right) + \\
+                    & + \Delta{t}^2 \cdot \sigma_2 \cdot \left(\frac{u_{i+1}^{k-1} - 2 \cdot u_i^{k-1} + u_{i-1}^{k-1}}{\Delta{x}^2} + F_i^{k-1}\right)
+                \end{align*}
+                
+                \begin{align*}
+                    u_i^{k+1} & - \frac{\Delta{t}^2 \cdot \sigma_1}{\Delta{x}^2} \cdot \left(u_{i+1}^{k+1} - 2 \cdot u_i^{k+1} + u_{i-1}^{k+1}\right) = \\
+                    & = 2 \cdot u_i^{k} - u_i^{k-1}  + \\
+                    & + \Delta{t}^2 \cdot \sigma_1 \cdot F_i^{k+1} + \\
+                    & + \Delta{t}^2 \cdot \left(1 - \sigma_1 - \sigma_2 \right) \cdot \left(\frac{u_{i+1}^{k} - 2 \cdot u_i^{k} + u_{i-1}^{k}}{\Delta{x}^2} + F_i^{k}\right) + \\
+                    & + \Delta{t}^2 \cdot \sigma_2 \cdot \left(\frac{u_{i+1}^{k-1} - 2 \cdot u_i^{k-1} + u_{i-1}^{k-1}}{\Delta{x}^2} + F_i^{k-1}\right)
+                \end{align*}
+                
+                \begin{align*}
+                    u(k+1, i) & - \frac{\Delta{t}^2 \cdot \sigma_1}{\Delta{x}^2} \cdot \left(u(k+1, i+1) - 2 \cdot u(k+1, i) + u(k+1, i-1)\right) = \\
+                    & = 2 \cdot u(k, i) - u(k-1, i)  + \\
+                    & + \Delta{t}^2 \cdot \sigma_1 \cdot F(k+1, i) + \\
+                    & + \Delta{t}^2 \cdot \left(1 - \sigma_1 - \sigma_2 \right) \cdot \left(\frac{u(k, i+1) - 2 \cdot u(k, i) + u(k, i-1)}{\Delta{x}^2} + F(k, i)\right) + \\
+                    & + \Delta{t}^2 \cdot \sigma_2 \cdot \left(\frac{u(k-1, i+1) - 2 \cdot u(k-1, i) + u(k-1, i-1)}{\Delta{x}^2} + F(k-1, i)\right)
+                \end{align*}
 
-        \begin{itemize}
-            \item Переваги: Простота реалізації, висока швидкість
-            \item Недоліки: Необхідна стійкість $ \frac{\Delta{t}}{\Delta{x}^2} \leq 0.5 $
-        \end{itemize}
+                \begin{itemize}
+                    \item Переваги: Простота реалізації, висока швидкість
+                    \item Недоліки:
+                        \begin{itemize}
+                            \item Для коректної роботи схеми: $ \sigma_1 \geq \sigma_2 $;
+                            \item $ \sigma_1 + \sigma_2 \geq \frac{1}{2} $ --- схема є \textbf{стійкою} для будь-яких $ \Delta{x} $ та $ \Delta{t} $;
+                            \item $ \sigma_1 + \sigma_2 < \frac{1}{2} $ --- схема є \textbf{умовно стійкою}, тобто вона буде працювати для:
+                            $$ \Delta{t} \leq \frac{\Delta{x}}{\sqrt{1 - 2 \cdot(\sigma_1 + \sigma_2)}} $$
+                    \end{itemize}
+                \end{itemize}
+
+            \item 
+                Явна схема
+
+                $$ u(t, x) $$
+                $$ \frac{\partial^2{u}}{\partial{t^2}} = \frac{\partial^2{u}}{\partial{x^2}} + F(t, x) $$
+                $$ \frac{u_i^{k+1} - 2 \cdot u_i^{k} + u_i^{k-1}}{\Delta{t}^2} = \frac{u_{i+1}^{k} - 2 \cdot u_i^{k} + u_{i-1}^{k}}{\Delta{x}^2} + F_i^{k} $$
+                $$ u_i^{k+1} - 2 \cdot u_i^{k} + u_i^{k-1} = \Delta{t}^2 \cdot \left( \frac{u_{i+1}^{k} - 2 \cdot u_i^{k} + u_{i-1}^{k}}{\Delta{x}^2} + F_i^{k} \right) $$
+                $$ u_i^{k+1} = 2 \cdot u_i^{k} - u_i^{k-1} + \Delta{t}^2 \cdot \left( \frac{u_{i+1}^{k} - 2 \cdot u_i^{k} + u_{i-1}^{k}}{\Delta{x}^2} + F_i^{k} \right) $$
+                $$ u(k+1, i) = 2 \cdot u(k, i) - u(k-1, i) + \Delta{t}^2 \cdot \left( \frac{u(k, i+1) - 2 \cdot u(k, i) + u(k, i-1)}{\Delta{x}^2} + F(k, i) \right) $$
+
+                \begin{itemize}
+                    \item Переваги: Простота реалізації, висока швидкість
+                    \item Недоліки: Необхідна стійкість $ \frac{\Delta{t}}{\Delta{x}^2} \leq 0.5 $
+                \end{itemize}
+        \end{enumerate}
 
     \newpage
     \section{ОПИС ПРОГРАМНОЇ РЕАЛИЗАЦІЇ}
